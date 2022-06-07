@@ -31,6 +31,15 @@ refer: https://github.com/leandromoreira/ffmpeg-libav-tutorial#transmuxing
 
 ## FFmpeg - command line
 
-## Common video operations
+- 安裝ffmpeg
+
+  refer: https://www.geeksforgeeks.org/how-to-install-ffmpeg-on-windows/
+
+- 切換封裝格式
+
+  ```shell
+  ffmpeg -i input.mp4 output.avi
+  ```
+
 
 ## Learn FFmpeg libav the Hard Way
