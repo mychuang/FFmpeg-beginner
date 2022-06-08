@@ -1,0 +1,8 @@
+.vscode/c_cpp_properties.json
+.vscode/settings.json
+build-ffmpeg-hello-Desktop_Qt_5_14_2_MSVC2017_64bit-Release/.qmake.stash
+build-ffmpeg-hello-Desktop_Qt_5_14_2_MSVC2017_64bit-Release/Makefile
+build-ffmpeg-hello-Desktop_Qt_5_14_2_MSVC2017_64bit-Release/Makefile.Debug
+build-ffmpeg-hello-Desktop_Qt_5_14_2_MSVC2017_64bit-Release/Makefile.Release
+build-ffmpeg-hello-Desktop_Qt_5_14_2_MSVC2017_64bit-Release/release/ffmpeg-hello.exe
+build-ffmpeg-hello-Desktop_Qt_5_14_2_MSVC2017_64bit-Release/release/main.obj

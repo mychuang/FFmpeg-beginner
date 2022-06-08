@@ -1,45 +1,63 @@
-# FFMPEG 技術評估報告
-refer: https://github.com/leandromoreira/ffmpeg-libav-tutorial#transmuxing
+# FFMPEG Beginner
+- refer: https://github.com/leandromoreira/ffmpeg-libav-tutorial#transmuxing
 
-## Intro
+- background: [background.md](background.md)
 
-- CODEC: 編解碼器
+# Chapter 0
 
-  透過編解碼器可以壓縮(解壓縮)視訊流<p>
-  試計算以下範例的原始影像大小: <p>
+## FFmpeg libav architecture
+
+Here's a diagram of the process of decoding a video:<p>
+
+<img src='./01.png' width='500px'>
+
+- 首先加載多媒體文件至[AVFormatContext](https://ffmpeg.org/doxygen/trunk/structAVFormatContext.html) (為便於理解，容器當作是文件格式即可)
+
+- It actually doesn't fully load the whole file: it often only reads the header.
+
+- Once we loaded the minimal header of our container, we can access its streams (streams 可視為最基本的視訊和音訊資料). Each stream will be available in a component called [AVStream](https://ffmpeg.org/doxygen/trunk/structAVStream.html).
+
+- 假設文件中包含AAC音訊流與H264（AVC）視訊流。我們可以從從每個流中提取出"pieces (slices) of data" called packets，這些packets將被加载到 AVPacket 中。
+
+- packets需要被解碼，we need to pass them to a specific [AVCodec](https://ffmpeg.org/doxygen/trunk/structAVCodec.html)
+
+- **AVCodec** will decode them into [AVFrame](https://ffmpeg.org/doxygen/trunk/structAVFrame.html). Finally, this component gives us the **uncompressed frame**. 
+
+## Install FFmpeg libav
+
+- Download [ffmpeg-master-latest-win64-lgpl-shared.zip](https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-lgpl-shared.zip), or check the others version: https://github.com/BtbN/FFmpeg-Builds/releases
+
+- Unzip the zip file, rename the folder as **ffmpeg** (不是必要，只是便於閱讀), check the subfolder as the following:
+
+  <img src='./02.png' width='500px'>
+
+## Quick start FFmpeg libav with QT
+
+- Create a new Qt project, and figure out the path of FFmpeg libav
+
+  ```make
+  INCLUDEPATH += $$FFMPEG_PATH/ffmpeg/include
+  LIBS += -L$$FFMPEG_PATH/ffmpeg/lib -lavutil -lavformat -lavcodec -lavdevice -lavfilter -lpostproc -lswresample -lswscale
+  ```
+
+- Include the headers in your code<br>
+  FFmpeg libav 為純C函式庫，為使C++相容，需加入 extern "C"語法
   
-  ```python
-  toppf = 1080 * 1920 //total_of_pixels_per_frame
-  cpp = 3 //cost_per_pixel
-  tis = 30 * 60 //time_in_seconds
-  fps = 24 //frames_per_second
-
-  required_storage = tis * fps * toppf * cpp #250.28GB
-  ```
-  30分鐘1080*1920解析度, 24fps的彩色影像(3通道)，就需要250.28G容量，That's why we need to use a CODEC.
-
-- container: 容器(封裝格式)
-
-  用於打包試頻或音頻的容器，又叫封裝格式，一般可透過文件副檔名來判斷容器格式，例如:<p>
-
-  |容器格式 | 視訊編碼格式| 音訊編瑪格式|
-  |------- |------------| -----------|
-  | MPEG4  |    h264   |     AAC    |    
-  | Webm   |    vp9   |     opus    |
-
-  還有其他的容器，例如: AVI, MOV, WMV...等
-
-## FFmpeg - command line
-
-- 安裝ffmpeg
-
-  refer: https://www.geeksforgeeks.org/how-to-install-ffmpeg-on-windows/
-
-- 切換封裝格式
-
-  ```shell
-  ffmpeg -i input.mp4 output.avi
+  ```c++
+  extern "C"{
+  #include "libavutil/avutil.h"
+  #include "libavformat/avformat.h"
+  #include "libavcodec/avcodec.h"
+  #include "libavdevice/avdevice.h"
+  #include "libavfilter/avfilter.h"
+  #include "libswresample/swresample.h"
+  #include "libswscale/swscale.h"
+  }
   ```
 
+- See sample ffmpeg-hello.pro
 
-## Learn FFmpeg libav the Hard Way
+# Chapter 1
+
+
+
