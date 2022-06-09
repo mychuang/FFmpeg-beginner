@@ -11,11 +11,11 @@ Here's a diagram of the process of decoding a video:<p>
 
 <img src='./01.png' width='500px'>
 
-- 首先加載多媒體文件至[AVFormatContext](https://ffmpeg.org/doxygen/trunk/structAVFormatContext.html) (為便於理解，容器當作是文件格式即可)
+1. 加載文件 (AVFormatContext): <br>
+  首先加載多媒體文件至[AVFormatContext](https://ffmpeg.org/doxygen/trunk/structAVFormatContext.html) (為便於理解，容器當作是文件格式即可)<br>
+  It actually doesn't fully load the whole file: it often only reads the header.
 
-- It actually doesn't fully load the whole file: it often only reads the header.
-
-- Once we loaded the minimal header of our container, we can access its streams (streams 可視為最基本的視訊和音訊資料). Each stream will be available in a component called [AVStream](https://ffmpeg.org/doxygen/trunk/structAVStream.html).
+2. 訪問數據流(AVStream): Once we loaded the minimal header of our container, we can access its streams (streams 可視為最基本的視訊和音訊資料). Each stream will be available in a component called [AVStream](https://ffmpeg.org/doxygen/trunk/structAVStream.html).
 
 - 假設文件中包含AAC音訊流與H264（AVC）視訊流。我們可以從從每個流中提取出"pieces (slices) of data" called packets，這些packets將被加载到 AVPacket 中。
 
@@ -55,7 +55,8 @@ Here's a diagram of the process of decoding a video:<p>
   }
   ```
 
-- See sample ffmpeg-hello.pro
+- Check basic samples: ch0 folder
+
 
 # Chapter 1
 
