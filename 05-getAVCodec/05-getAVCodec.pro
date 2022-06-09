@@ -23,7 +23,6 @@ INCLUDEPATH += $$FFMPEG_PATH/ffmpeg/include
 
 LIBS += -L$$FFMPEG_PATH/ffmpeg/lib -lavutil -lavformat -lavcodec -lavdevice -lavfilter -lpostproc -lswresample -lswscale
 
-
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin

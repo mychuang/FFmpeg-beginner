@@ -3,8 +3,6 @@
 
 - background: [background.md](background.md)
 
-# Chapter 0
-
 ## FFmpeg libav architecture
 
 Here's a diagram of the process of decoding a video:<p>
@@ -55,10 +53,31 @@ Here's a diagram of the process of decoding a video:<p>
   }
   ```
 
-- Check basic samples: ch0 folder
+## Beginner Samples
 
+- 01-version: 顯示FFmpeg lib 版本號
 
-# Chapter 1
+- 02-AVformatContext: 加載多媒體文件至AVFormatContext
+
+- 03-AVStream: 訪問數據流(AVStream)
+
+- 04-AVStreamProperty: 讀取AVStream的codec屬性(AVCodecParameters)，编解码方式(AVCodec)
+
+- 05-getAVCodec: 讀取AVCodecContext，用以維護編解碼過程
+
+- 06-AVPacket: 從stream讀取packet
+
+- 07-AVFrame: 從解碼器接收 raw data frame（解壓後的frame）
+
+- 08-AVFrame_2: 將07中的解碼(讀取frame)過程以function呈現
+
+- 09-grayFrame: 將frame轉成灰度圖像
+
+  <img src='./03.png' width='500px'>
+  <p>
+
+  <img src='./04.png' width='500px'>
+
 
 
 

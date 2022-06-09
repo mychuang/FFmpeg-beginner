@@ -12,7 +12,6 @@ extern "C"{
 #include "libswscale/swscale.h"
 }
 
-
 int main(int argc, char *argv[]){
     QCoreApplication a(argc, argv);
 
@@ -29,6 +28,10 @@ int main(int argc, char *argv[]){
         printf("ERROR: could not get the stream info");
     }
 
+    int video_stream_index = -1; //it will be used checking stream index
+    const AVCodec *pCodec = NULL; //it will be used saving video codec
+    AVCodecParameters *pCodecParameters =  NULL; //this component describes the properties of a codec used by the stream i
+
     //loop though all the streams
     for (int i = 0; i < pFormatContext->nb_streams; i++){
         printf("finding the proper decoder (CODEC) \n");
@@ -39,15 +42,32 @@ int main(int argc, char *argv[]){
         //獲取數據流的编解码方式: AVCodec
         const AVCodec *pLocalCodec = avcodec_find_decoder(pLocalCodecParameters->codec_id);
 
-        // 當 stream 為 video, 儲存 index, codec parameters 和 codec
+        // when the stream is a video, we store its index, codec parameters and codec
         if (pLocalCodecParameters->codec_type == AVMEDIA_TYPE_VIDEO){
-            printf("Video Codec: resolution %d x %d \n", pLocalCodecParameters->width, pLocalCodecParameters->height);
-        }else if (pLocalCodecParameters->codec_type == AVMEDIA_TYPE_AUDIO){
-            printf("Audio Codec: %d channels, sample rate %d \n", pLocalCodecParameters->channels, pLocalCodecParameters->sample_rate);
+            if (video_stream_index == -1) {
+                video_stream_index = i; //it will be used checking stream index
+                pCodec = pLocalCodec; //it will be used saving video codec
+                pCodecParameters = pLocalCodecParameters; //this component describes the properties of a codec used by the stream i
+            }
         }
         printf("\tCodec %s ID %d bit_rate %lld \n", pLocalCodec->long_name, pLocalCodec->id, pLocalCodecParameters->bit_rate);
         cout << "-------------------------------------------------" << endl;
     }
+
+    if (video_stream_index == -1) {
+        printf("Does not contain a video stream! \n");
+        return -1;
+    }
+
+    //利用獲取到的AVCodec幫AVCodecContext分配記憶體, AVCodecContext用以維護編解碼過程
+    AVCodecContext *pCodecContext = avcodec_alloc_context3(pCodec);
+
+    //代入AVCodecParameters(properties of a codec)以獲取AVCodecContext
+    avcodec_parameters_to_context(pCodecContext, pCodecParameters);
+
+    //使用 avcodec_open2 打開解碼器
+    avcodec_open2(pCodecContext, pCodec, NULL);
+
 
     return a.exec();
 }
