@@ -7,7 +7,7 @@
 
 Here's a diagram of the process of decoding a video:<p>
 
-<img src='./01.png' width='500px'>
+<img src='./img/01.png' width='500px'>
 
 1. 加載文件 (AVFormatContext): <br>
   首先加載多媒體文件至[AVFormatContext](https://ffmpeg.org/doxygen/trunk/structAVFormatContext.html) (為便於理解，容器當作是文件格式即可)<br>
@@ -27,7 +27,7 @@ Here's a diagram of the process of decoding a video:<p>
 
 - Unzip the zip file, rename the folder as **ffmpeg** (不是必要，只是便於閱讀), check the subfolder as the following:
 
-  <img src='./02.png' width='500px'>
+  <img src='./img/02.png' width='500px'>
 
 ## Quick start FFmpeg libav with QT
 
@@ -73,10 +73,15 @@ Here's a diagram of the process of decoding a video:<p>
 
 - 09-grayFrame: 將frame轉成灰度圖像
 
-  <img src='./03.png' width='500px'>
+  <img src='./img/03.png' width='500px'>
+  
   <p>
+  
+  <img src='./img/04.png' width='500px'>
 
-  <img src='./04.png' width='500px'>
+- 10-saveFigure: 使用sws_scale，將Frame轉成RGB，並儲存圖像
+
+  <img src='./img/05.png' width='500px'>
 
 
 
