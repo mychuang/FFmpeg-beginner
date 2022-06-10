@@ -83,6 +83,9 @@ Here's a diagram of the process of decoding a video:<p>
 
   <img src='./img/05.png' width='500px'>
 
+- 11-smplePlayer: 將**10-saveFigure**放入QThread，結合QPainter播放影像
+
+  <img src='./img/06.png' width='500px'>
 
 
 
