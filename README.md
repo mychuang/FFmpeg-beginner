@@ -1,7 +1,6 @@
 # FFMPEG Beginner
-- refer: https://github.com/leandromoreira/ffmpeg-libav-tutorial#transmuxing
 
-- background: [background.md](background.md)
+- See the [Introduction](background.md)
 
 ## FFmpeg libav architecture
 
@@ -10,16 +9,15 @@ Here's a diagram of the process of decoding a video:<p>
 <img src='./img/01.png' width='500px'>
 
 1. 加載文件 (AVFormatContext): <br>
-  首先加載多媒體文件至[AVFormatContext](https://ffmpeg.org/doxygen/trunk/structAVFormatContext.html) (為便於理解，容器當作是文件格式即可)<br>
-  It actually doesn't fully load the whole file: it often only reads the header.
+  首先加載多媒體文件至[AVFormatContext](https://ffmpeg.org/doxygen/trunk/structAVFormatContext.html) (為便於理解，容器當作是文件格式即可)
 
-2. 訪問數據流(AVStream): Once we loaded the minimal header of our container, we can access its streams (streams 可視為最基本的視訊和音訊資料). Each stream will be available in a component called [AVStream](https://ffmpeg.org/doxygen/trunk/structAVStream.html).
+2. 訪問數據流(AVStream): streams 可視為最基本的視訊和音訊資料, Each stream will be available in a component called [AVStream](https://ffmpeg.org/doxygen/trunk/structAVStream.html).
 
-- 假設文件中包含AAC音訊流與H264（AVC）視訊流。我們可以從從每個流中提取出"pieces (slices) of data" called packets，這些packets將被加载到 AVPacket 中。
+3. 可以從每個AVStream中尋找解碼器
 
-- packets需要被解碼，we need to pass them to a specific [AVCodec](https://ffmpeg.org/doxygen/trunk/structAVCodec.html)
+4. 假設文件中包含AAC音訊流與H264（AVC）視訊流。我們可以從從每個流中提取出"pieces (slices) of data" called packets，這些packets將被加载到 AVPacket 中。
 
-- **AVCodec** will decode them into [AVFrame](https://ffmpeg.org/doxygen/trunk/structAVFrame.html). Finally, this component gives us the **uncompressed frame**. 
+5. packets需要被解碼，we need to pass them to a specific [AVCodec](https://ffmpeg.org/doxygen/trunk/structAVCodec.html), **AVCodec** will decode them into [AVFrame](https://ffmpeg.org/doxygen/trunk/structAVFrame.html). Finally, this component gives us the **uncompressed frame**. 
 
 ## Install FFmpeg libav
 
@@ -83,9 +81,17 @@ Here's a diagram of the process of decoding a video:<p>
 
   <img src='./img/05.png' width='500px'>
 
+  <p>程式流程圖可用下圖表示<p>
+
+  <img src='./img/r1.png' width='500px'>
+
 - 11-smplePlayer: 將**10-saveFigure**放入QThread，結合QPainter播放影像
 
   <img src='./img/06.png' width='500px'>
 
+
+### Reference
+
+- https://github.com/leandromoreira/ffmpeg-libav-tutorial#transmuxing
 
 
